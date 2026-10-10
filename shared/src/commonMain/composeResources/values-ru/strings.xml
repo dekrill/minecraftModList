@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Моды Minecraft</string>
+    <string name="downloads_millions">%1$s млн загрузок</string>
+    <string name="followers_thousands">%1$s тыс.</string>
+
+    <string name="downloads_label">Загрузки</string>
+    <string name="followers_label">Подписчики</string>
+    <string name="supported_loaders">Поддерживаемые загрузчики</string>
+    <string name="game_versions">Версии игры</string>
+    <string name="dependencies">Зависимости</string>
+    <string name="about">О моде</string>
+    <string name="mod_not_found">Мод не найден</string>
+    <string name="action_back">Назад</string>
+    <string name="theme_toggle">Сменить тему</string>
+    <string name="language_toggle">Язык</string>
+</resources>

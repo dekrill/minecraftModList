@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Minecraft Mods</string>
+    <string name="downloads_millions">%1$sM downloads</string>
+    <string name="followers_thousands">%1$sk</string>
+
+    <string name="downloads_label">Downloads</string>
+    <string name="followers_label">Followers</string>
+
+    <string name="supported_loaders">Supported Loaders</string>
+    <string name="game_versions">Game Versions</string>
+    <string name="dependencies">Dependencies</string>
+    <string name="about">About</string>
+    <string name="mod_not_found">Mod not found</string>
+    <string name="action_back">Back</string>
+    <string name="theme_toggle">Toggle theme</string>
+    <string name="language_toggle">Language</string>
+</resources>
