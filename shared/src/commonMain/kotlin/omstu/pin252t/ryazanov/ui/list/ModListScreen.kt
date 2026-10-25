@@ -21,7 +21,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -34,6 +38,8 @@ import androidx.compose.ui.unit.dp
 import minecraftmodlist.shared.generated.resources.Res
 import minecraftmodlist.shared.generated.resources.app_name
 import minecraftmodlist.shared.generated.resources.downloads_millions
+import minecraftmodlist.shared.generated.resources.no_mods_found
+import minecraftmodlist.shared.generated.resources.search_placeholder
 import omstu.pin252t.ryazanov.model.Mod
 import omstu.pin252t.ryazanov.ui.common.ModIcon
 import omstu.pin252t.ryazanov.ui.common.ModTag
@@ -43,6 +49,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun ModListScreen(
     state: ModListState,
+    onSearchQueryChange: (String) -> Unit,
     onModClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     topBarActions: @Composable () -> Unit = {}
@@ -77,21 +84,78 @@ fun ModListScreen(
                 )
             }
         } else {
-            LazyColumn(
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(innerPadding)
             ) {
-                items(
-                    items = state.mods,
-                    key = { it.id }
-                ) { mod ->
-                    ModCard(
-                        mod = mod,
-                        onClick = { onModClick(mod.id) }
+                OutlinedTextField(
+                    value = state.searchQuery,
+                    onValueChange = onSearchQueryChange,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    placeholder = {
+                        Text(
+                            text = stringResource(Res.string.search_placeholder),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    leadingIcon = {
+                        Text(
+                            text = "🔍",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    trailingIcon = {
+                        if (state.searchQuery.isNotEmpty()) {
+                            IconButton(onClick = { onSearchQueryChange("") }) {
+                                Text(
+                                    text = "✕",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                    },
+                    singleLine = true,
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
                     )
+                )
+
+                val displayMods = state.filteredMods
+                if (displayMods.isEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.no_mods_found),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.outline
+                        )
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(
+                            items = displayMods,
+                            key = { it.id }
+                        ) { mod ->
+                            ModCard(
+                                mod = mod,
+                                onClick = { onModClick(mod.id) }
+                            )
+                        }
+                    }
                 }
             }
         }
