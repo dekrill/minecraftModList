@@ -14,4 +14,6 @@
     <string name="action_back">Back</string>
     <string name="theme_toggle">Toggle theme</string>
     <string name="language_toggle">Language</string>
+    <string name="search_placeholder">Search by name...</string>
+    <string name="no_mods_found">No mods found</string>
 </resources>

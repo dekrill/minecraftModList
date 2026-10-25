@@ -13,4 +13,6 @@
     <string name="action_back">Назад</string>
     <string name="theme_toggle">Сменить тему</string>
     <string name="language_toggle">Язык</string>
+    <string name="search_placeholder">Поиск по названию...</string>
+    <string name="no_mods_found">Моды не найдены</string>
 </resources>
